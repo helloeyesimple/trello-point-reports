@@ -146,10 +146,29 @@ $(document).ready(function(){
 	    });
 	});
 
-	// on dropdown selection
+	// on project dropdown selection
 	$("#project-list").change(function(){
 		var value = $(this).val();
-		$("*[data-project]").hide();
-		$("*[data-project='"+value+"']").show();
+
+		if(value != ""){
+			$("*[data-project]").hide();
+			$("*[data-project='"+value+"']").show();
+		}else{
+			$("*[data-project]").show();
+		}
+		renderSummary();
+	});
+
+	// on project dropdown selection
+	$("#user-list").change(function(){
+		var value = $(this).val();
+
+		if(value != ""){
+			$("*[data-user-id]").hide();
+			$("*[data-user-id='"+value+"']").show();
+		}else{
+			$("*[data-user-id]").show();
+		}
+		renderSummary();
 	});
 });
