@@ -1,0 +1,54 @@
+{
+	"manifest_version": 2,
+	"name": "Trello Story Point Report for Agile Tools",
+	"description": "Join us on eyesimple.us for more awesome stuffs!",
+	"version": "1",
+	"author": "Yohanes Raymond",
+	"browser_action": {
+	   "default_title": "Eyesimple Reports",
+	   "default_popup": "reports.html"
+	},
+	/*
+	"background": {
+       "scripts": [
+         	"js/jquery.js",
+         	"js/bg.js"
+       ],
+       "persistent": false
+    },
+    // */
+    
+	"content_scripts": [
+	    {
+	      	"all_frames": true,
+	      	"matches": [ "https://trello.com/*" ],
+	      	"js": [
+	      		"js/jquery.js",
+	      		"js/script.js"
+	  		],
+	  		// "css": [
+	  			// "css/*"
+			// ],
+			"run_at": "document_end"
+		}
+	],
+	// */
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"permissions": [
+		"identity", 
+		"storage", 
+		"unlimitedStorage", 
+		"webNavigation",
+		"notifications", 
+		"activeTab",
+		// "webRequest", 
+		"webRequestBlocking", 
+		"https://trello.com/", 
+		"https://trello.com/1/*"
+	],
+	"web_accessible_resources": [
+	    "images/*",
+	    "*.html",
+	    "manifest.json"
+	]
+}
