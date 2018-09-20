@@ -3,7 +3,11 @@
   	<head>
     	<title>Eyesimple Reports</title>
     	<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
+
     	<script src="js/jquery.js"></script>
+    	<script type="text/javascript" src="js/moment.min.js"></script>
+		<script type="text/javascript" src="js/daterangepicker.min.js"></script>
     	<script src="js/custom.js"></script>
   	</head>
   	<body>
@@ -31,6 +35,11 @@
 					    <select id="user-list" class="custom-select">
 					      <option value="">All Users</option>
 					    </select>
+					</div>
+		    	</div>
+		    	<div class="col-md-12">
+		    		<div class="form-group">
+				        <input type="text" class="form-control" id="daterange" placeholder="Filter Date">
 					</div>
 		    	</div>
 		    	<div class="col-md-12">

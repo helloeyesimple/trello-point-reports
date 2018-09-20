@@ -1,6 +1,6 @@
 var boardArr = {};
 
-function formatDate(date) {
+function formatNiceDate(date) {
 	var date = new Date(date);
 
 	var monthNames = [
@@ -97,11 +97,11 @@ function renderData(){
 
 				boardArr[item].data.forEach(function(it, idx){
 
-					var date = (it.date != "") ? formatDate(it.date) : "";
-					html += '<tr class="user-data" data-user-id="'+it.member_id+'" data-user-name="'+it.member+'">'+
+					var date = (it.date != "") ? formatNiceDate(it.date) : "";
+					html += '<tr class="user-data" data-date="'+it.date+'" data-user-id="'+it.member_id+'" data-user-name="'+it.member+'">'+
 						'<td class="user-data-name">'+it.member+'</td>'+
 						'<td class="user-data-point">'+it.point+'</td>'+
-						'<td class="user-data-date" data-date="'+it.date+'">'+date+'</td>'+
+						'<td class="user-data-date">'+date+'</td>'+
 					'</tr>';
 				});
 			
@@ -170,5 +170,26 @@ $(document).ready(function(){
 			$("*[data-user-id]").show();
 		}
 		renderSummary();
+	});
+
+	// on change dates
+	$('#daterange').daterangepicker({
+	    opens: 'left'
+	}, function(start, end, label) {
+	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+
+	    $("*[data-date]").hide();
+	    $("*[data-date]").each(function(){
+		    var currentDate = new Date($(this).attr('data-date'));
+		    var minDate = new Date(start.format('MM/DD/YYYY'));
+		    var maxDate =  new Date(end.format('MM/DD/YYYY'));
+
+		    if (currentDate > minDate && currentDate < maxDate ){
+		         $(this).show()
+		    }
+		    else{
+		        // alert('Out Side range !!')
+		    }
+		});
 	});
 });
