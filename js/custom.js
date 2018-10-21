@@ -116,6 +116,27 @@ function renderData(){
 	renderUsers();
 }
 
+function getFilter(){
+	var project_val = $("#project-list").val();
+	var user_val = $("#user-list").val();
+
+	if(project_val != ""){
+		$("*[data-project]").hide();
+		$("*[data-project='"+project_val+"']").show();
+	}else{
+		$("*[data-project]").show();
+	}
+
+	if(user_val != ""){
+		$("*[data-user-id]").hide();
+		$("*[data-user-id='"+user_val+"']").show();
+	}else{
+		$("*[data-user-id]").show();
+	}
+
+	renderSummary();
+}
+
 $(document).ready(function(){
 	// init
 	loadStorage();
@@ -129,6 +150,30 @@ $(document).ready(function(){
 	$("#remove_sync").click(function(e){
 		e.preventDefault();
 		removeStorage();
+	});
+
+	// on sync current board
+	$("#sync_all").click(function(e){
+		e.preventDefault();
+		boardArr = {};
+
+		/*
+		chrome.tabs.executeScript({
+	        // code: '(' +  + ')();' //argument here is a string but function.toString() returns function's code
+	        code: 'syncBoards()'
+	    }, (results) => {
+	        //Here we have just the innerHTML and not DOM structure
+	        // console.log('Popup script:')
+	        // console.log(results);
+	    });
+	    */
+
+	    chrome.tabs.create({ url: "https://trello.com/b/VNu3OZw6/palugasa-marketplace", selected: false }, function(){
+	    	console.log('callback');
+	    	chrome.tabs.executeScript({
+		        code: 'savePoint()'
+		    });
+	    });
 	});
 
 	// on sync current board
@@ -147,29 +192,8 @@ $(document).ready(function(){
 	});
 
 	// on project dropdown selection
-	$("#project-list").change(function(){
-		var value = $(this).val();
-
-		if(value != ""){
-			$("*[data-project]").hide();
-			$("*[data-project='"+value+"']").show();
-		}else{
-			$("*[data-project]").show();
-		}
-		renderSummary();
-	});
-
-	// on project dropdown selection
-	$("#user-list").change(function(){
-		var value = $(this).val();
-
-		if(value != ""){
-			$("*[data-user-id]").hide();
-			$("*[data-user-id='"+value+"']").show();
-		}else{
-			$("*[data-user-id]").show();
-		}
-		renderSummary();
+	$("#project-list, #user-list").change(function(){
+		getFilter();
 	});
 
 	// on change dates

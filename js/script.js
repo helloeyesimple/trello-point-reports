@@ -1,3 +1,4 @@
+var timer;
 var boardArr = {};
 var arr = {
 	title: '',
@@ -56,8 +57,44 @@ function resetValue(){
 	};
 }
 
-function savePoint(){
-	// console.log('save point');
+function syncBoards(){
+	var n = 0;
+	$(".boards-page-board-section-list-item").each(function(){
+		var target = $(this).find('a');
+		var url = window.location.origin+$(target).attr('href');
+		var el = this;
+		console.log(url);
+
+		setTimeout(function(){
+			var win = window.open(url, '_blank');
+			win.focus;
+
+			// chrome.tabs.create('tab'+n, {
+			// 	url: url
+			// }, function(){
+			// 	console.log('new tab');
+			// });
+
+			win.onload = function(){
+				savePoint();
+
+				// chrome.tabs.executeScript({
+			 //        code: 'savePoint()'
+			 //    });
+			};
+
+			// $(target)[0].click();
+			// setTimeout(function(){
+				// savePoint();
+			// 	window.history.back();
+			// }, 5000);
+		}, n*10000);
+		n++;
+	});
+}
+
+function savePoint(method){
+	console.log('save point');
 	resetValue();
 
 	$("#board .js-list").each(function(){
@@ -96,6 +133,11 @@ function savePoint(){
 					n++;
 				}
 			});
+
+			if(n == 0 && method == 'with_close'){ 
+				console.log('No data found! Window now closing');
+				window.close(); 
+			}
 		}
 	});
 }
